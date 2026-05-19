@@ -1,95 +1,96 @@
 package Interfaz;
 
 import Dominio.Tecnico;
-import Util.Validador;
+
 import java.util.Scanner;
 
 public class GestionarTecnicos {
+    public static Tecnico[] tecnicos = new Tecnico[50];
+    public static int total = 0;
 
-    static Tecnico[] tecnicos = new Tecnico[10];
-    static int total = 0;
+    static {
+        tecnicos[total++] = new Tecnico(1, "Pedro Soporte", "tecnico@uce.com", "Tecnico123", "EMP-001", "Hardware y Redes", 1);
+    }
 
     public static void mostrar(Scanner sc) {
         int opcion;
         do {
-            System.out.println("\n=== GESTIONAR TÉCNICOS ===");
-            System.out.println("1. Registrar Técnico");
-            System.out.println("2. Listar Técnicos");
-            System.out.println("0. Volver");
-            System.out.print("Opción: ");
-
+            System.out.println("\n--- GESTIONAR PERSONAL TÉCNICO (ADMINISTRADOR) ---");
+            System.out.println("1. Registrar personal técnico");
+            System.out.println("2. Actualizar datos del personal técnico");
+            System.out.println("3. Consultar personal técnico");
+            System.out.println("4. Eliminar personal técnico");
+            System.out.println("0. Volver al menú principal");
+            System.out.print("Seleccione una opción: ");
             String entrada = sc.nextLine();
-            if (!entrada.matches("[0-2]")) {
-                System.out.println("Error: Opción inválida.");
-                opcion = -1;
-                continue;
-            }
-
+            if (!entrada.matches("[0-4]")) { opcion = -1; continue; }
             opcion = Integer.parseInt(entrada);
+
             switch (opcion) {
                 case 1: registrar(sc); break;
-                case 2: listar(); break;
-                case 0: System.out.println("Volviendo..."); break;
+                case 2: actualizar(sc); break;
+                case 3: consultar(); break;
+                case 4: eliminar(sc); break;
             }
         } while (opcion != 0);
     }
 
     private static void registrar(Scanner sc) {
-        System.out.println("\n--- Registrar Técnico ---");
+        System.out.println("\n--- Registrar Nuevo Técnico ---");
+        System.out.print("Nombre completo: ");
+        String nombre = sc.nextLine();
+        System.out.print("Email: ");
+        String email = sc.nextLine();
+        System.out.print("Password: ");
+        String pass = sc.nextLine();
+        System.out.print("Especialidad (Ej. Hardware, Software): ");
+        String especialidad = sc.nextLine();
 
-        String nombre;
-        do {
-            System.out.print("Nombre completo: ");
-            nombre = sc.nextLine();
-            if (!Validador.validarNombrePropio(nombre))
-                System.out.println("Error: Nombre inválido.");
-        } while (!Validador.validarNombrePropio(nombre));
-
-        String email;
-        do {
-            System.out.print("Email: ");
-            email = sc.nextLine();
-            if (!Validador.validarEmail(email))
-                System.out.println("Error: Email inválido.");
-        } while (!Validador.validarEmail(email));
-
-        String password;
-        do {
-            System.out.print("Password: ");
-            password = sc.nextLine();
-            if (!Validador.validarPassword(password))
-                System.out.println("Error: Mínimo 6 caracteres, una mayúscula y un número.");
-        } while (!Validador.validarPassword(password));
-
-        String especialidad;
-        do {
-            System.out.print("Especialidad: ");
-            especialidad = sc.nextLine();
-            if (!Validador.validarNombrePropio(especialidad))
-                System.out.println("Error: Especialidad inválida.");
-        } while (!Validador.validarNombrePropio(especialidad));
-
-        String nivelStr;
-        do {
-            System.out.print("Nivel de acceso (1-3): ");
-            nivelStr = sc.nextLine();
-            if (!Validador.validarPrioridad(nivelStr))
-                System.out.println("Error: Nivel debe ser 1, 2 o 3.");
-        } while (!Validador.validarPrioridad(nivelStr));
-
-        Tecnico t = new Tecnico(total + 1, nombre, email, password, "EMP-" + (total + 1), especialidad, Integer.parseInt(nivelStr));
-        tecnicos[total] = t;
-        total++;
-        System.out.println("Técnico registrado correctamente!");
+        tecnicos[total++] = new Tecnico(total + 1, nombre, email, pass, "EMP-00" + (total + 1), especialidad, 1);
+        System.out.println("✅ Técnico registrado exitosamente.");
     }
 
-    private static void listar() {
-        System.out.println("\n--- Lista de Técnicos ---");
-        if (total == 0) {
-            System.out.println("No hay técnicos registrados.");
-            return;
+    private static void consultar() {
+        System.out.println("\n--- Nómina de Técnicos ---");
+        boolean hay = false;
+        for(int i = 0; i < total; i++) {
+            if (tecnicos[i] != null) {
+                System.out.println("ID: " + tecnicos[i].getIdUsuario() + " | Nombre: " + tecnicos[i].getNombre() + " | Especialidad: " + tecnicos[i].getEspecialidad());
+                hay = true;
+            }
         }
-        for (int i = 0; i < total; i++)
-            System.out.println(tecnicos[i]);
+        if(!hay) System.out.println("No hay técnicos en el sistema.");
+    }
+
+    private static void actualizar(Scanner sc) {
+        consultar();
+        System.out.print("\nIngrese el ID del técnico a actualizar: ");
+        int id = Integer.parseInt(sc.nextLine());
+        for(int i = 0; i < total; i++) {
+            if(tecnicos[i] != null && tecnicos[i].getIdUsuario() == id) {
+                System.out.print("Nueva Especialidad (Actual: " + tecnicos[i].getEspecialidad() + ") [Enter para omitir]: ");
+                String esp = sc.nextLine();
+                if(!esp.isEmpty()) tecnicos[i].setEspecialidad(esp);
+                System.out.println("✅ Datos actualizados correctamente.");
+                return;
+            }
+        }
+        System.out.println("❌ Técnico no encontrado.");
+    }
+
+    private static void eliminar(Scanner sc) {
+        consultar();
+        System.out.print("\nIngrese el ID del técnico a eliminar: ");
+        int id = Integer.parseInt(sc.nextLine());
+        System.out.print("¿Está seguro de eliminar este técnico? (s/n): ");
+        if(sc.nextLine().equalsIgnoreCase("s")) {
+            for(int i = 0; i < total; i++) {
+                if(tecnicos[i] != null && tecnicos[i].getIdUsuario() == id) {
+                    tecnicos[i] = null; // Borrado lógico
+                    System.out.println("✅ Técnico eliminado del sistema.");
+                    return;
+                }
+            }
+        }
     }
 }

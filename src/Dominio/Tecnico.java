@@ -1,6 +1,6 @@
 package Dominio;
 
-public class Tecnico extends Usuario {
+public class Tecnico extends Usuario  {
     private String numeroEmpleado;
     private String especialidad;
     private int nivelAcceso;
@@ -14,14 +14,22 @@ public class Tecnico extends Usuario {
         this.nivelAcceso = nivelAcceso;
     }
 
-    public String getNumeroEmpleado() { return numeroEmpleado; }
-    public void setNumeroEmpleado(String numeroEmpleado) { this.numeroEmpleado = numeroEmpleado; }
-    public String getEspecialidad() { return especialidad; }
-    public void setEspecialidad(String especialidad) { this.especialidad = especialidad; }
-    public int getNivelAcceso() { return nivelAcceso; }
-    public void setNivelAcceso(int nivelAcceso) { this.nivelAcceso = nivelAcceso; }
+    public String getNumeroEmpleado() {
+        return numeroEmpleado; }
+    public void setNumeroEmpleado(String numeroEmpleado) {
+        this.numeroEmpleado = numeroEmpleado; }
+    public String getEspecialidad() {
+        return especialidad; }
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad; }
+    public int getNivelAcceso() {
+        return nivelAcceso; }
+    public void setNivelAcceso(int nivelAcceso) {
+        this.nivelAcceso = nivelAcceso; }
 
-    public String toString() {
-        return super.toString() + " | Especialidad: " + especialidad + " | Nivel: " + nivelAcceso;
-    }
+    public void asignarTicket(Ticket ticket) {}
+    public void registrarDiagnostico(Diagnostico diagnostico) {}
+    public void registrarSolucion(Solucion solucion) {}
+    public void asignarReparacion(Reparacion reparacion) {}
+    public void actualizarEstadoReparacion(Reparacion reparacion) {}
 }

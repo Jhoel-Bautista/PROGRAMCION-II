@@ -14,14 +14,21 @@ public class Cliente extends Usuario {
         this.direccion = direccion;
     }
 
-    public String getNumeroCliente() { return numeroCliente; }
-    public void setNumeroCliente(String numeroCliente) { this.numeroCliente = numeroCliente; }
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
-    public String getDireccion() { return direccion; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public String getNumeroCliente() {
+        return numeroCliente; }
+    public void setNumeroCliente(String numeroCliente) {
+        this.numeroCliente = numeroCliente; }
+    public String getTelefono() {
+        return telefono; }
+    public void setTelefono(String telefono) {
+        this.telefono = telefono; }
+    public String getDireccion() {
+        return direccion; }
+    public void setDireccion(String direccion) {
+        this.direccion = direccion; }
 
-    public String toString() {
-        return super.toString() + " | Tel: " + telefono + " | Dir: " + direccion;
-    }
+    public Ticket crearTicket() {
+        return new Ticket(); }
+    public Ticket consultarTicket(int idTicket) {
+        return null; }
 }
