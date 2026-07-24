@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="junit-standalone">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ProyectoFinal_DAO_Diagrama_TryCatch/lib/junit-standalone.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
